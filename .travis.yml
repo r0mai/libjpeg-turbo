@@ -43,7 +43,8 @@ matrix:
 
 before_install:
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then
-      brew install nasm homebrew/versions/gcc5 md5sha1sum Caskroom/versions/java6 gpg &&
+      brew install nasm homebrew/versions/gcc5 md5sha1sum Caskroom/versions/java6 &&
+      brew upgrade gnupg &&
       git clone --depth=1 https://github.com/libjpeg-turbo/gas-preprocessor.git ~/src/gas-preprocessor &&
       ln -fs /Applications/Xcode.app /Applications/Xcode72.app;
     fi
@@ -56,7 +57,7 @@ before_install:
       tar xf ci/keys &&
       rm ci/keys &&
       mv ci/gpgsign ~/src/buildscripts &&
-      gpg --import ci/sign_ljt &&
+      gpg --batch --import ci/sign_ljt &&
       rm ci/sign_ljt;
     fi
 
